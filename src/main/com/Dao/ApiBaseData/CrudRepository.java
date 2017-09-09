@@ -1,5 +1,6 @@
 package Dao.ApiBaseData;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -8,6 +9,6 @@ import java.util.List;
 public interface CrudRepository<T> {
     int save(T entity);
     T findOne(int ID);
-    List<T> getListTable();
+    List<T> getListTable() throws SQLException;
     void delete(T entity);
 }

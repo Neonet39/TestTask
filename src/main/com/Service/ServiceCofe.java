@@ -7,4 +7,5 @@ import java.util.List;
  */
 public interface ServiceCofe<T> {
     List<T> getAssortmentCoffe();
+    void setOrderCoffe(T orderCoffe);
 }

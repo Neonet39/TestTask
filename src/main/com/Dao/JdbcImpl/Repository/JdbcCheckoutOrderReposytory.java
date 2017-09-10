@@ -21,9 +21,8 @@ public class JdbcCheckoutOrderReposytory implements CheckoutOrderRepository<Orde
 
     private Connection connection = null;
 
-    public void TransactionOrder(List<OrderCoffe> orderCoffeList, AddressDelivery addresDelivery) {
+    public boolean TransactionOrder(List<OrderCoffe> orderCoffeList, AddressDelivery addresDelivery) {
         boolean flag = true;
-
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
@@ -52,7 +51,7 @@ public class JdbcCheckoutOrderReposytory implements CheckoutOrderRepository<Orde
                         key = resultSet.getLong(1);
                     }
                 } catch (SQLException e) {
-
+                    flag = false;
                     e.printStackTrace();
                 } finally {
                     resultSet.close();
@@ -72,6 +71,7 @@ public class JdbcCheckoutOrderReposytory implements CheckoutOrderRepository<Orde
                 }
 
             } catch (SQLException e) {
+                flag = false;
                 e.printStackTrace();
                 try {
                     connection.rollback();
@@ -94,9 +94,10 @@ public class JdbcCheckoutOrderReposytory implements CheckoutOrderRepository<Orde
             try {
                 connection.close();
             } catch (SQLException e) {
+                flag = false;
                 e.printStackTrace();
             }
         }
-
+     return flag;
     }
 }

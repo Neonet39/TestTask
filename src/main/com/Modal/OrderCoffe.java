@@ -14,4 +14,5 @@ public class OrderCoffe extends StructurModal {
 
         this.quantity = quantity;
     }
+
 }

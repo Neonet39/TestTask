@@ -18,6 +18,8 @@ import java.util.List;
  */
 public class JdbcConfigRepository implements ConfigRepository {
     Connection connection = null;
+
+
     public int save(Configuration entity) {
         return 0;
     }
@@ -27,8 +29,16 @@ public class JdbcConfigRepository implements ConfigRepository {
     }
 
     public List<Configuration> getListTable() throws SQLException {
+        return null;
+    }
+
+    public void delete(Configuration entity) {
+
+    }
+
+    public Configuration getConfigFile() {
         List configurationList = new ArrayList<Configuration>();
-        Configuration configuration;
+        Configuration configuration = new Configuration();
 
         String sql = "select * from configuration";
 
@@ -42,9 +52,9 @@ public class JdbcConfigRepository implements ConfigRepository {
                 try {
                     resultSet = preparedStatement.executeQuery();
                     while (resultSet.next()) {
-                        configuration = new Configuration();
+
                         configuration.setMap(resultSet.getString(1),resultSet.getString(2));
-                        configurationList.add(configuration);
+
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -67,12 +77,6 @@ public class JdbcConfigRepository implements ConfigRepository {
                 e.printStackTrace();
             }
         }
-        return configurationList;
+        return configuration;
     }
-
-    public void delete(Configuration entity) {
-
-    }
-
-
 }

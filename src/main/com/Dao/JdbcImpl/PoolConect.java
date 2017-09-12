@@ -22,6 +22,10 @@ public class PoolConect {
         ds.setUrl(settings.value("db.url"));
         ds.setUsername(settings.value("db.user"));
         ds.setPassword(settings.value("db.password"));
+        ds.setMaxIdle(Integer.parseInt(settings.value("db.setMaxIdle")));
+        ds.setMaxActive(Integer.parseInt(settings.value("db.maxActive")));
+
+
     }
     public static Connection getConection(){
 

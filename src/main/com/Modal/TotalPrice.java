@@ -23,6 +23,9 @@ public class TotalPrice extends PreOrder {
         this.total = total;
     }
 
+    public double getFullTotal(){
+        return this.delivery+this.total;
+    }
     @Override
     public String toString() {
         return "TotalPrice{" +

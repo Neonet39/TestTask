@@ -2,9 +2,7 @@ package Dao.JdbcImpl.Repository;
 
 import Dao.ApiBaseData.CheckoutOrderRepository;
 import Dao.JdbcImpl.PoolConect;
-import Modal.AddressDelivery;
-import Modal.AssortmentCoffe;
-import Modal.OrderCoffe;
+import Modal.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,15 +11,16 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by Evgeny on 09.09.2017.
  */
-public class JdbcCheckoutOrderReposytory implements CheckoutOrderRepository<OrderCoffe, AddressDelivery> {
+public class JdbcCheckoutOrderReposytory implements CheckoutOrderRepository<PreOrderCoffe, AddressDelivery,TotalPrice> {
 
     private Connection connection = null;
 
-    public boolean TransactionOrder(List<OrderCoffe> orderCoffeList, AddressDelivery addresDelivery) {
+    public boolean TransactionOrder(List<PreOrderCoffe> preOrderCoffeList, AddressDelivery addresDelivery, TotalPrice totalPrice) {
         boolean flag = true;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -30,7 +29,7 @@ public class JdbcCheckoutOrderReposytory implements CheckoutOrderRepository<Orde
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         String sql = "insert into coffeeorder (order_date,name,delivery_address,cost) VALUES ('" + dateFormat.format(new Date()) + "'," +
-                "'" + addresDelivery.getName() + "','" + addresDelivery.getDelivery_address() + "'," + addresDelivery.getCost() + ")";
+                "'" + addresDelivery.getName() + "','" + addresDelivery.getDelivery_address() + "'," + totalPrice.getFullTotal() + ")";
         try {
             connection = PoolConect.getConection();
             try {
@@ -63,10 +62,10 @@ public class JdbcCheckoutOrderReposytory implements CheckoutOrderRepository<Orde
 
                 preparedStatement = connection.prepareStatement(sql);
 
-                for (int i = 0; i < orderCoffeList.size(); i++) {
-                    preparedStatement.setInt(1, orderCoffeList.get(i).getId());
+                for (int i = 0; i < preOrderCoffeList.size(); i++) {
+                    preparedStatement.setInt(1, preOrderCoffeList.get(i).getId());
                     preparedStatement.setInt(2, Ai);
-                    preparedStatement.setInt(3, orderCoffeList.get(i).getQuantity());
+                    preparedStatement.setInt(3, preOrderCoffeList.get(i).getQuantity());
                     preparedStatement.executeUpdate();
                 }
 
@@ -89,9 +88,10 @@ public class JdbcCheckoutOrderReposytory implements CheckoutOrderRepository<Orde
             }
             connection.commit();
         } catch (SQLException e) {
-
+            e.printStackTrace();
         }finally {
             try {
+                if(connection!=null)
                 connection.close();
             } catch (SQLException e) {
                 flag = false;

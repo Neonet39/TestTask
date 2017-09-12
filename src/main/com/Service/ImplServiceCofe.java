@@ -40,9 +40,7 @@ public class ImplServiceCofe implements ServiceCofe {
 
 
 
-    public void setOrderCoffe(Object orderCoffe) {
 
-    }
 
     public Map<String, PreOrder> getPreOrderCoffe(List<OrderCoffe> OrderCoffeList)  {
         List preOrderCoffeList = new  ArrayList<PreOrderCoffe>();
@@ -98,6 +96,10 @@ public class ImplServiceCofe implements ServiceCofe {
             }
         }
         return null;
+    }
+
+    public boolean setOrderCoffe(List<PreOrderCoffe> preOrderCoffeList, AddressDelivery addresDelivery, TotalPrice totalPrice) {
+      return  checkoutOrderRepository.TransactionOrder(preOrderCoffeList,addresDelivery,totalPrice);
     }
 
 

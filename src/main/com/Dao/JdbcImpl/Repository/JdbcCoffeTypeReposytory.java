@@ -32,8 +32,7 @@ public class JdbcCoffeTypeReposytory implements CoffeTypeRepository {
     }
 
     public List<AssortmentCoffe> getListTable() {
-        String sql = "select * from coffeetype where disabled  not like 'y' or disabled is null";
-        ;
+        String sql = "select * from coffeetype where (disabled is null or disabled not like 'y')";
         return getAssortmentCoffeList(sql);
     }
 
@@ -47,7 +46,7 @@ public class JdbcCoffeTypeReposytory implements CoffeTypeRepository {
                 sqlWhere.append(" id=" + orderCoffesList.get(i).getId());
             else sqlWhere.append(" or id=" + orderCoffesList.get(i).getId());
         }
-        String sql = "select * from coffeetype where" + sqlWhere.toString()+" and disabled not like 'y' or disabled is null";
+        String sql = "select * from coffeetype where " + sqlWhere.toString()+" and (disabled is null or disabled not like 'y')";
         System.out.println(sql);
         return getAssortmentCoffeList(sql);
 
@@ -76,6 +75,7 @@ public class JdbcCoffeTypeReposytory implements CoffeTypeRepository {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }finally {
+                    if(resultSet!=null)
                     resultSet.close();
                 }
 

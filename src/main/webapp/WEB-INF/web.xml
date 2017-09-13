@@ -34,6 +34,24 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
         <servlet-class>Controller.ControllerServlet.CotrollerError</servlet-class>
     </servlet>
 
+    <servlet-mapping>
+        <servlet-name>Greeting</servlet-name>
+        <url-pattern>/greeting</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Greeting</servlet-name>
+        <servlet-class>Controller.ControllerServlet.HelloController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Contact</servlet-name>
+        <url-pattern>/contact</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Contact</servlet-name>
+        <servlet-class>Controller.ControllerServlet.ContactController</servlet-class>
+    </servlet>
+
 
   <servlet-mapping>
     <servlet-name>PreOrderCoffe</servlet-name>

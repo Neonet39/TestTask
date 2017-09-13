@@ -1,10 +1,6 @@
 package Controller.ControllerServlet;
 
 import Convert.ConvertToObject;
-import Dao.ApiBaseData.CoffeTypeRepository;
-import Dao.JdbcImpl.Repository.JdbcCoffeTypeReposytory;
-import Modal.OrderCoffe;
-import Modal.PreOrder;
 import Modal.PreOrderCoffe;
 import Modal.TotalPrice;
 import Service.ImplServiceCofe;
@@ -17,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +29,7 @@ public class PreOrderCoffeController extends HttpServlet {
         ConvertToObject convertToObject = new ConvertToObject();
         List orderCoffeList = convertToObject.ConvetrtToOrderCofe(request.getParameterMap());
 
-        if(orderCoffeList.size()>0) {
+        if(orderCoffeList!=null) {
             Map preOrderCoffeMap = serviceCofe.getPreOrderCoffe(orderCoffeList);
 
             if(preOrderCoffeMap!=null) {

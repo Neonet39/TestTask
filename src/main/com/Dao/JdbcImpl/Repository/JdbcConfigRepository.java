@@ -59,6 +59,7 @@ public class JdbcConfigRepository implements ConfigRepository {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }finally {
+
                     resultSet.close();
                 }
 

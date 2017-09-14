@@ -7,58 +7,30 @@ http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 
   <display-name>Archetype Created Web Application</display-name>
 
- <servlet-mapping>
-   <servlet-name>AssortmentCofe</servlet-name>
-   <url-pattern>/assortmentcoffe</url-pattern>
- </servlet-mapping>
-  <servlet>
-    <servlet-name>AssortmentCofe</servlet-name>
-    <servlet-class>Controller.ControllerServlet.AssortmentCoffeController</servlet-class>
-  </servlet>
 
-    <servlet-mapping>
-        <servlet-name>Order</servlet-name>
-        <url-pattern>/order</url-pattern>
-    </servlet-mapping>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+        </param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
     <servlet>
-        <servlet-name>Order</servlet-name>
-        <servlet-class>Controller.ControllerServlet.OrderCoffeController</servlet-class>
-    </servlet>
+        <servlet-name>appServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/spring-config/appconfig-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
 
+    </servlet>
     <servlet-mapping>
-        <servlet-name>Error</servlet-name>
-        <url-pattern>/error</url-pattern>
+        <servlet-name>appServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+
     </servlet-mapping>
-    <servlet>
-        <servlet-name>Error</servlet-name>
-        <servlet-class>Controller.ControllerServlet.CotrollerError</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Greeting</servlet-name>
-        <url-pattern>/greeting</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>Greeting</servlet-name>
-        <servlet-class>Controller.ControllerServlet.HelloController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Contact</servlet-name>
-        <url-pattern>/contact</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>Contact</servlet-name>
-        <servlet-class>Controller.ControllerServlet.ContactController</servlet-class>
-    </servlet>
 
 
-  <servlet-mapping>
-    <servlet-name>PreOrderCoffe</servlet-name>
-    <url-pattern>/preordercoffe</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>PreOrderCoffe</servlet-name>
-    <servlet-class>Controller.ControllerServlet.PreOrderCoffeController</servlet-class>
-  </servlet>
 </web-app>

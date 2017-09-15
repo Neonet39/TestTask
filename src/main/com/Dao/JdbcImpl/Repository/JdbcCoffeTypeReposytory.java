@@ -47,7 +47,7 @@ public class JdbcCoffeTypeReposytory implements CoffeTypeRepository {
             else sqlWhere.append(" or id=" + orderCoffesList.get(i).getId());
         }
         String sql = "select * from coffeetype where " + sqlWhere.toString()+" and (disabled is null or disabled not like 'y')";
-        System.out.println(sql);
+
         return getAssortmentCoffeList(sql);
 
     }

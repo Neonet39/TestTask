@@ -14,12 +14,12 @@ public class Coffeeorderitem {
     @Column(name = "id",length = 11,nullable = false)
     private int id;
 
-    @OneToMany
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id",nullable = false)
     private Coffeetype type_id;
 
-    @OneToMany
-    @JoinColumn(name = "type_id",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id",nullable = false)
     private Coffeeorder order_id;
 
     @Column(name = "quantity",length = 11)

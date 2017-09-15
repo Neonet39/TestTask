@@ -1,14 +1,11 @@
 package Service;
 
-import Dao.ApiBaseData.CheckoutOrderRepository;
 import Dao.ApiBaseData.CoffeTypeRepository;
-
-import Dao.JdbcImpl.Repository.JdbcCheckoutOrderReposytory;
-import Dao.JdbcImpl.Repository.JdbcCoffeTypeReposytory;
-
+import Dao.ApiBaseData.ConfigRepository;
+import Dao.HibernateImpl.Entity.Coffeetype;
 import Modal.*;
-import Setting.ConfigurationPrice;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,41 +14,45 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Evgeny on 08.09.2017.
+ * Created by Evgeny on 14.09.2017.
  */
-public class ImplServiceCofe implements ServiceCofe {
+@Service
+public class SpringImplServiceCofe implements ServiceCofe{
 
-    CoffeTypeRepository coffeTypeRepository = new JdbcCoffeTypeReposytory();
-    CheckoutOrderRepository checkoutOrderRepository = new JdbcCheckoutOrderReposytory();
+    @Autowired
+    CoffeTypeRepository coffeTypeRepository;
 
-    Configuration configuration = new ConfigurationPrice().getConfigPrice();
-
+    @Autowired
+    ConfigRepository configRepository;
 
     public List<AssortmentCoffe> getAssortmentCoffe() {
-        List assortmentCoffe = new ArrayList<AssortmentCoffe>();
+
+
         try {
-           assortmentCoffe =  coffeTypeRepository.getListTable();
+            return coffeTypeRepository.getListTable();
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
-        return assortmentCoffe;
+
+
     }
 
 
-
-
-
-    public Map<String, PreOrder> getPreOrderCoffe(List<OrderCoffe> OrderCoffeList)  {
-        List preOrderCoffeList = new  ArrayList<PreOrderCoffe>();
+    public Map<String, PreOrder> getPreOrderCoffe(List<OrderCoffe> OrderCoffeList) {
+        List preOrderCoffeList = new ArrayList<PreOrderCoffe>();
         PreOrderCoffe preOrderCoffe;
 
         TotalPrice tPrice = new TotalPrice();
 
         Map preOrder = new HashMap<String,PreOrder>();
 
-        List<AssortmentCoffe> assortmentCoffeList =  coffeTypeRepository.getListTalbe(OrderCoffeList);
+        List assortmentCoffeList =
+        coffeTypeRepository.getListTalbe(OrderCoffeList);
+
 
         if(OrderCoffeList.size()==assortmentCoffeList.size()){
+            Configuration configuration = configRepository.getConfigFile();
             String x = configuration.getMap("x");
             String m = configuration.getMap("m");
             String n = configuration.getMap("n");
@@ -62,14 +63,18 @@ public class ImplServiceCofe implements ServiceCofe {
                 double costDelivery = Double.valueOf(m);
                 double freeDelivery = Double.valueOf(x);
 
-                for(AssortmentCoffe coffeList: assortmentCoffeList){
+                for(int i=0;i<assortmentCoffeList.size();i++){
+                    String type_name = ((Coffeetype)assortmentCoffeList.get(i)).getType_name();
+                    int id = ((Coffeetype )assortmentCoffeList.get(i)).getId();
+                    double price = ((Coffeetype )assortmentCoffeList.get(i)).getPrice();
+
                     preOrderCoffe = new PreOrderCoffe();
-                    preOrderCoffe.setType_name(coffeList.getType_name());
-                    preOrderCoffe.setId(coffeList.getId());
-                    preOrderCoffe.setPrice(coffeList.getPrice());
+                    preOrderCoffe.setType_name(type_name);
+                    preOrderCoffe.setId(id);
+                    preOrderCoffe.setPrice(price);
 
                     for (int quantity=0;quantity<OrderCoffeList.size();quantity++){
-                        if (OrderCoffeList.get(quantity).getId()==coffeList.getId()){
+                        if (OrderCoffeList.get(quantity).getId()==id){
                             preOrderCoffe.setQuantity(OrderCoffeList.get(quantity).getQuantity());
                             break;
                         }
@@ -94,12 +99,11 @@ public class ImplServiceCofe implements ServiceCofe {
                 return preOrder;
             }
         }
-        return null;
+        return preOrder;
     }
+
 
     public boolean setOrderCoffe(List<PreOrderCoffe> preOrderCoffeList, AddressDelivery addresDelivery, TotalPrice totalPrice) {
-      return  checkoutOrderRepository.TransactionOrder(preOrderCoffeList,addresDelivery,totalPrice);
+        return false;
     }
-
-
 }

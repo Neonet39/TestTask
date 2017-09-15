@@ -1,7 +1,10 @@
 package Dao.HibernateImpl.Entity;
 
+
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Evgeny on 14.09.2017.
@@ -25,6 +28,7 @@ public class Coffeeorder {
 
     @Column(name = "cost")
     private double cost;
+
 
     public int getId() {
         return id;

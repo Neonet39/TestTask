@@ -17,9 +17,9 @@
         <beans:property name="suffix" value=".jsp" />
     </beans:bean>
 
-    <context:component-scan base-package="Controller"/>
-
-
+    <context:component-scan base-package="Controller.ControllerSpring" />
+    <context:component-scan base-package="Service"/>
+    <context:component-scan base-package="Dao.HibernateImpl"/>
 
 
 </beans:beans>

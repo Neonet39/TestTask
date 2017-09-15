@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ControlleerInfoContent {
     @RequestMapping(value = "/greeting",method = RequestMethod.GET)
-    public String administrator_area(){
+    public String greeting(){
 
         return "greeting";
     }

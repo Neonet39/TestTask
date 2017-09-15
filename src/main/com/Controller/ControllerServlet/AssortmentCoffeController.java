@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * Created by Evgeny on 11.09.2017.
@@ -21,7 +22,11 @@ public class AssortmentCoffeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("page/assortmentcoffe.jsp");
-        request.setAttribute("assortementCoffeList",serviceCofe.getAssortmentCoffe());
+        try {
+            request.setAttribute("assortementCoffeList",serviceCofe.getAssortmentCoffe());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         dispatcher.forward(request,response);
     }
 }

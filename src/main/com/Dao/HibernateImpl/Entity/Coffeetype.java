@@ -1,6 +1,7 @@
 package Dao.HibernateImpl.Entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by Evgeny on 14.09.2017.
@@ -19,8 +20,10 @@ public class Coffeetype {
     @Column(name = "price",nullable = false)
     double price;
 
-    @Column(name = "type_name",length = 1)
-    char disabled;
+    @Column(name = "disabled")
+    Character disabled;
+
+
 
     public int getId() {
         return id;
